@@ -36,7 +36,7 @@ public class ScoreView extends Container implements Observer{
 		foodValue = new Label("10    " );
 		Label healthTitle = new Label("Health: ");
 		healthValue = new Label("10" );
-		Label soundTitle = new Label("Sound: ");
+		Label soundTitle = new Label("Mute: ");
 		soundValue = new Label("ON  ");
 		
 		this.add(livesTitle);

@@ -35,13 +35,13 @@ public abstract class Movable extends GameObject{
 	 * Calling cos for x and sin for y and multiplying them by their speed.
 	 * Then takes those new values and adds them to their old x and y.
 	 */
-	public void move() {
+	public void move(int time) {
 		float deltaX, deltaY;
 		
 		this.setHeading(this.getHeading() % 359);
 		
-		deltaX = (float)Math.cos(90 -Math.toRadians(heading)) * speed;
-		deltaY = (float)Math.sin(90- Math.toRadians(heading)) * speed;
+		deltaX = (float)Math.cos(90 -Math.toRadians(heading)) * speed * time / 50;
+		deltaY = (float)Math.sin(90- Math.toRadians(heading)) * speed * time / 50;
 		
 		this.setX(this.getX()+deltaX);
 		this.setY(this.getY()+deltaY);

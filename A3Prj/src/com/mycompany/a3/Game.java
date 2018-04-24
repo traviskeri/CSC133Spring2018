@@ -37,12 +37,15 @@ public class Game extends Form implements Runnable, ActionListener{
 	private Button breakButton;
 	private Button leftTurnButton;
 	private Button rightTurnButton;
+	private Button pauseButton;
 	private Button positionButton;
 	private Button aSideButton;
 	private BGSound bgSound;
 	private Sound sSound;
 	private Sound fSound;
 	private Sound fsSound;
+	private int time = 50;
+	private Style disabledStyle;
 
 	
 	public Game() {
@@ -74,7 +77,7 @@ public class Game extends Form implements Runnable, ActionListener{
 		accelerateButton.getAllStyles().setFgColor(ColorUtil.BLACK);
 		accelerateButton.setCommand(accelCommand);	
 		
-		Style disabledStyle = new Style(accelerateButton.getStyle());
+		disabledStyle = new Style(accelerateButton.getStyle());
 		disabledStyle.setBgColor(ColorUtil.WHITE);
 		accelerateButton.setDisabledStyle(disabledStyle);
 		
@@ -99,7 +102,7 @@ public class Game extends Form implements Runnable, ActionListener{
 		rightTurnButton.setCommand(rtCommand);
 		rightTurnButton.setDisabledStyle(disabledStyle);
 		
-		Button pauseButton = new Button("Play/Pause");
+		pauseButton = new Button("Play/Pause");
 		pauseButton.getAllStyles().setBgTransparency(255);
 		pauseButton.getAllStyles().setBgColor(ColorUtil.BLUE);
 		pauseButton.getAllStyles().setFgColor(ColorUtil.BLACK);
@@ -111,8 +114,10 @@ public class Game extends Form implements Runnable, ActionListener{
 		positionButton.getAllStyles().setBgColor(ColorUtil.BLUE);
 		positionButton.getAllStyles().setFgColor(ColorUtil.BLACK);
 		positionButton.setCommand(posCommand);
-		positionButton.setDisabledStyle(disabledStyle);
+		Style posStyle = new Style(disabledStyle);
+		positionButton.setDisabledStyle(posStyle);
 		positionButton.setEnabled(false);
+		
 		
 		Container leftContainer = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 		leftContainer.getAllStyles().setBgTransparency(255);
@@ -166,8 +171,9 @@ public class Game extends Form implements Runnable, ActionListener{
 		
 		bottomContainer.add(positionButton);
 		
+		
 		timer = new UITimer(this);
-		timer.schedule(50, true, this);
+		timer.schedule(time, true, this);
 		this.show();
 		bgSound.play();
 		mv.setMapViewSize();
@@ -175,7 +181,7 @@ public class Game extends Form implements Runnable, ActionListener{
 	}
 
 	public void run() {
-		gw.clockTick();
+		gw.clockTick(time);
 		checkSounds();
 		mv.repaint();
 	}

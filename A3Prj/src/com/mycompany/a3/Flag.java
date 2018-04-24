@@ -19,20 +19,34 @@ public class Flag extends Fixed implements IDrawable, ICollider{
 	 * @param x float
 	 * @param y float
 	 */
-	public Flag(int sequenceNumber, int size, int color, int x, int y) {
-		super(x, y, color, size);
+	public Flag(int sequenceNumber, int size, int color, int x, int y, boolean isSelected) {
+		super(x, y, color, size, isSelected);
 		this.sequenceNumber = sequenceNumber;
 	}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
-		int [] xVals = {(int)pCmpRelPrnt.getX()+(int)this.getX(), (int)pCmpRelPrnt.getX()+(int)this.getX()+(this.getSize()/2), 
-						(int)pCmpRelPrnt.getX()+(int)this.getX()+this.getSize() };
-		int [] yVals = {(int)pCmpRelPrnt.getY()+(int)this.getY(), (int)pCmpRelPrnt.getY()+(int)this.getY()+this.getSize(), 
-						(int)pCmpRelPrnt.getY()+(int)this.getY()};
-		g.setColor(this.getColor());
-		g.fillPolygon(xVals, yVals, 3);
-		g.setColor(ColorUtil.BLACK);
-		g.drawString(""+this.getSequenceNumber(), (int)pCmpRelPrnt.getX()+(int)this.getX()+40, (int)pCmpRelPrnt.getY()+(int)this.getY()+30);
+		if(this.isSelected()) {
+			int [] xVals = {(int)pCmpRelPrnt.getX()+(int)this.getX(), (int)pCmpRelPrnt.getX()+(int)this.getX()+(this.getSize()/2), 
+							(int)pCmpRelPrnt.getX()+(int)this.getX()+this.getSize() };
+			int [] yVals = {(int)pCmpRelPrnt.getY()+(int)this.getY(), (int)pCmpRelPrnt.getY()+(int)this.getY()+this.getSize(), 
+							(int)pCmpRelPrnt.getY()+(int)this.getY()};
+			g.setColor(ColorUtil.WHITE);
+			g.fillPolygon(xVals, yVals, 3);
+			g.setColor(ColorUtil.BLACK);
+			g.drawString(""+this.getSequenceNumber(), (int)pCmpRelPrnt.getX()+(int)this.getX()+40, 
+						(int)pCmpRelPrnt.getY()+(int)this.getY()+30);
+		}
+		else {
+			int [] xVals = {(int)pCmpRelPrnt.getX()+(int)this.getX(), (int)pCmpRelPrnt.getX()+(int)this.getX()+(this.getSize()/2), 
+							(int)pCmpRelPrnt.getX()+(int)this.getX()+this.getSize() };
+			int [] yVals = {(int)pCmpRelPrnt.getY()+(int)this.getY(), (int)pCmpRelPrnt.getY()+(int)this.getY()+this.getSize(), 
+							(int)pCmpRelPrnt.getY()+(int)this.getY()};
+			g.setColor(this.getColor());
+			g.fillPolygon(xVals, yVals, 3);
+			g.setColor(ColorUtil.BLACK);
+			g.drawString(""+this.getSequenceNumber(), (int)pCmpRelPrnt.getX()+(int)this.getX()+40, 
+						(int)pCmpRelPrnt.getY()+(int)this.getY()+30);
+		}
 	}
 	/**
 	 * This method overrides the toString method in Fixed

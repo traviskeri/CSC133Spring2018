@@ -9,6 +9,7 @@ public class FoodStation extends Fixed implements IDrawable, ICollider{
 	private int capacity;
 	private String name = "FoodStation";
 	private boolean collidable;
+	private boolean isSelected;
 	
 	/**
 	 * This is the constructor for the FoodStation. It calls the the constructor for Fixed to set fields that can not be changed.
@@ -19,8 +20,8 @@ public class FoodStation extends Fixed implements IDrawable, ICollider{
 	 * @param x float
 	 * @param y float
 	 */
-	public FoodStation(int capacity, int size, int color, float x, float y, boolean collidable) {
-		super(x, y, size);
+	public FoodStation(int capacity, int size, int color, float x, float y, boolean collidable, boolean isSelected) {
+		super(x, y, size, isSelected);
 		this.capacity = capacity;
 		this.setColor(color);
 		this.setCollidable(collidable);
@@ -28,11 +29,21 @@ public class FoodStation extends Fixed implements IDrawable, ICollider{
 	
 
 	public void draw(Graphics g, Point pCmpRelPrnt) {
-		g.setColor(ColorUtil.GREEN);
-		g.fillRect((int)pCmpRelPrnt.getX()+(int)this.getX(), (int)pCmpRelPrnt.getY()+(int)this.getY(), this.getSize(), this.getSize());
-		g.setColor(ColorUtil.BLACK);
-		g.drawString(""+this.getCapacity(), (int)pCmpRelPrnt.getX()+(int)this.getX()+(this.getSize()/2),
+		if(this.isSelected()) {System.out.println("yes");}
+		if(this.isSelected()) {
+			g.setColor(ColorUtil.WHITE);
+			g.drawRect((int)pCmpRelPrnt.getX()+(int)this.getX(), (int)pCmpRelPrnt.getY()+(int)this.getY(), this.getSize(), this.getSize());
+			g.setColor(ColorUtil.BLACK);
+			g.drawString(""+this.getCapacity(), (int)pCmpRelPrnt.getX()+(int)this.getX()+(this.getSize()/2),
+						(int)pCmpRelPrnt.getY()+(int)this.getY()+(this.getSize()/2));
+		}
+		else {
+			g.setColor(this.getColor());
+			g.fillRect((int)pCmpRelPrnt.getX()+(int)this.getX(), (int)pCmpRelPrnt.getY()+(int)this.getY(), this.getSize(), this.getSize());
+			g.setColor(ColorUtil.BLACK);
+			g.drawString(""+this.getCapacity(), (int)pCmpRelPrnt.getX()+(int)this.getX()+(this.getSize()/2),
 					(int)pCmpRelPrnt.getY()+(int)this.getY()+(this.getSize()/2));
+		}
 	}
 	
 	/**

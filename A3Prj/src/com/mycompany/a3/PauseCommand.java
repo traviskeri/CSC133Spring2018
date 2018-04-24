@@ -17,6 +17,7 @@ public class PauseCommand extends Command{
 	public void actionPerformed(ActionEvent ev) {
 		gw.setPauseEnabled(true);
 		gw.setPaused(!gw.isPaused());
+		gw.setPosEnabled(false);
 		System.out.println("Paused");
 		
 	}

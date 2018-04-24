@@ -8,7 +8,7 @@ public class SoundCommand extends Command {
 	private GameWorld gw;
 
 	public SoundCommand(GameWorld gw) {
-		super("Sound ON/OFF");
+		super("Mute ON/OFF");
 		this.gw = gw;
 	}
 	

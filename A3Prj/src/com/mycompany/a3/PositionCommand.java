@@ -14,6 +14,7 @@ public class PositionCommand extends Command{
 	
 	@Override
 	public void actionPerformed(ActionEvent ev) {
+		gw.setPosEnabled(!gw.isPosEnabled());
 		System.out.println("Positioning");
 		
 	}

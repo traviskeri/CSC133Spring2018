@@ -37,6 +37,7 @@ public class GameWorld extends Observable {
 	private ArrayList<ICollider> theCollisions;
 	private boolean paused = false;
 	private boolean pauseEnabled = false;
+	private boolean posEnabled =false;
 	private boolean sCollision = false;
 	private boolean fCollision = false;
 	private boolean fsCollision = false;
@@ -66,7 +67,7 @@ public class GameWorld extends Observable {
 		
 		flags = new ArrayList<Flag>();
 		for(int i = 0; i < numberOfFlags; i++) {
-			flags.add(new Flag(i+1, 100, ColorUtil.BLUE, 100 + 200 * i, 100 + 100 * i));
+			flags.add(new Flag(i+1, 100, ColorUtil.BLUE, 100 + 200 * i, 100 + 100 * i, false));
 			theCollection.add(flags.get(i));
 		}
 		
@@ -74,7 +75,7 @@ public class GameWorld extends Observable {
 		for(int i = 0; i < numberOfFoodStations; i++) {
 			foodStationSize = randomSize(rnd.nextInt());
 			foodStations.add(new FoodStation(foodStationCapacity(foodStationSize), foodStationSize, ColorUtil.GREEN, 
-							randomX(rnd.nextInt()), randomY(rnd.nextInt()), true));
+							randomX(rnd.nextInt()), randomY(rnd.nextInt()), true, false));
 			theCollection.add(foodStations.get(i));
 		}
 		
@@ -168,7 +169,7 @@ public class GameWorld extends Observable {
 			foodStationSize = randomSize(rnd.nextInt());
 		
 			FoodStation fs = new FoodStation(foodStationCapacity(foodStationSize), foodStationSize, ColorUtil.GREEN, 
-										randomX(rnd.nextInt()), randomY(rnd.nextInt()), true);
+										randomX(rnd.nextInt()), randomY(rnd.nextInt()), true, false);
 		
 			theCollection.add(fs);
 			foodStations.add(fs);
@@ -182,14 +183,14 @@ public class GameWorld extends Observable {
 	/**
 	 * This method increases clock by 1.
 	 */
-	public void clockTick() {
+	public void clockTick(int time) {
 		if(!paused) {
 			count++;
 			if(count % 20 == 0) {
 				clock++;
 				lowerFoodLevel();
 			}
-			move();
+			move(time);
 			checkCollisions();
 			checkGameOver();
 			setChanged();
@@ -202,7 +203,7 @@ public class GameWorld extends Observable {
 	 * If that object is a Spider it changes the heading by random number between -5 and 5.
 	 * Then moves the movable objects, check for objects going off the screen.
 	 */
-	public void move() {
+	public void move(int time) {
 		Random rnd = new Random();
 		rnd.setSeed(System.currentTimeMillis());
 		
@@ -218,7 +219,7 @@ public class GameWorld extends Observable {
 					((Spider) mObj).setHeading(mObj.getHeading() + (rnd.nextInt() % 10 - 5));
 				}
 				
-				mObj.move();
+				mObj.move(time);
 				
 				if(mObj.getX() > maxX-mObj.getSize()) {
 					mObj.setX(maxX-mObj.getSize());
@@ -509,5 +510,17 @@ public class GameWorld extends Observable {
 
 	public void setSoundChanged(boolean soundChanged) {
 		this.soundChanged = soundChanged;
+	}
+
+	public boolean isPosEnabled() {
+		return posEnabled;
+	}
+
+	public void setPosEnabled(boolean posEnabled) {
+		this.posEnabled = posEnabled;
+	}
+	
+	public GameObjectCollection getTheCollection() {
+		return theCollection;
 	}
 }
